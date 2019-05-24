@@ -1,9 +1,9 @@
 import wave
 import pyaudio
+import struct
+import math
 import WavUtils as util
 
-console_input = "./sample/stereo/SanSalvadorr.wav"
-wavData = util.WavFile(console_input)
+wavTrack = util.WavFile("./sample/stereo/Roundabout.wav")
 
-wavData.play()
-wavData.close()
+wavTrack.play()
