@@ -6,4 +6,6 @@ import WavUtils as util
 
 wavTrack = util.WavFile("./sample/stereo/Roundabout.wav")
 
+samples = wavTrack.get_samples()
+
 wavTrack.play()
