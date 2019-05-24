@@ -13,6 +13,7 @@ class WavFile:
         self.length = self.frames / self.fs # length of a file in seconds
         self.bytes = self.wav.getsampwidth() # number of bytes per sample
         self.channels = self.wav.getnchannels() # number of channels, 1 - mono, 2 - stereo
+        self.wav_data = self.wav.readframes(self.chunk)
         
         self.p = pyaudio.PyAudio()
         self.stream = self.p.open(
@@ -25,11 +26,10 @@ class WavFile:
 
     def play(self):
         """Play the file"""
-        wav_data = self.wav.readframes(self.chunk)
 
-        while len(wav_data) > 0:
-            self.stream.write(wav_data)
-            wav_data = self.wav.readframes(self.chunk)
+        while len(self.wav_data) > 0:
+            self.stream.write(self.wav_data)
+            self.wav_data = self.wav.readframes(self.chunk)
 
 
     def close(self):
