@@ -35,7 +35,10 @@ class WavFile:
 
 
     def play(self):
-        """Play the file"""
+        """Play the sound"""
         play = sa.play_buffer(self.data, self.nChannels, self.bytes, self.fs)
         play.wait_done()
 
+    def write_to_file(self, file):
+        """Save file in a .wav format"""
+        wavio.write(file, self.data, self.fs, scale = None, sampwidth = self.bytes)
