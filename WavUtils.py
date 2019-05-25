@@ -1,4 +1,3 @@
-import math
 import numpy as np
 import wavio
 import simpleaudio as sa
@@ -51,11 +50,10 @@ class WavFile:
         # convert delay in seconds to delay in number of samples
         delaySamples = delay * self.fs
     
-        for sample in range(delaySamples, self.nSamples):
+        for i in range(delaySamples, self.nSamples):
             
-            currentSample = self.data[sample, :]
-            editedSample = self.data[sample - delaySamples, :] * decayFactor
+            current = self.data[i]
+            edited = self.data[i - delaySamples] * decayFactor
             
-            currentSample += editedSample.astype(int)
+            current += edited.astype(int)
         
-
