@@ -1,9 +1,5 @@
-Do rana.wav
-Roundabout.wav
-Stairway to heaven solo.wav
-SanSalvadorr.wav
-__pycache__/WavUtils.cpython-37.pyc
+.vscode/
+__pycache__/
 tempCodeRunnerFile.py
-.vscode/launch.json
-output/out1.wav
-output/out2.wav
+output/
+sample/

@@ -1,6 +1,3 @@
-import wave
-import pyaudio
-import struct
 import math
 import numpy as np
 import wavio
@@ -16,7 +13,7 @@ class WavFile:
         self.fs = self.wav.rate
 
         # track data
-        self.data = self.wav.data
+        self.data = np.array(self.wav.data)
 
         # dimensions of the data which is (nSamples, nChannels)
         dim = np.shape(self.data)
@@ -39,6 +36,26 @@ class WavFile:
         play = sa.play_buffer(self.data, self.nChannels, self.bytes, self.fs)
         play.wait_done()
 
+
     def write_to_file(self, file):
         """Save file in a .wav format"""
-        wavio.write(file, self.data, self.fs, scale = None, sampwidth = self.bytes)
+        wavio.write(file, self.data, self.fs, scale = 'none', sampwidth = self.bytes)
+
+   
+    def echo_effect(self, delay, decayFactor ):
+        """Add echo effect
+
+           delay: in seconds
+           decayFactor: [0,1]  
+        """
+        # convert delay in seconds to delay in number of samples
+        delaySamples = delay * self.fs
+    
+        for sample in range(delaySamples, self.nSamples):
+            
+            currentSample = self.data[sample, :]
+            editedSample = self.data[sample - delaySamples, :] * decayFactor
+            
+            currentSample += editedSample.astype(int)
+        
+
