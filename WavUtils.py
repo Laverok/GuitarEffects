@@ -3,47 +3,39 @@ import pyaudio
 import struct
 import math
 import numpy as np
+import wavio
 import simpleaudio as sa
 
 class WavFile:
 
-    chunk = 1024
-
     def __init__(self, file):
-        """Initialize audio stream and save all information"""
-        self.wav = wave.open(file, 'r')
-        self.fileName = file
+        """Read the audio file and save all the important data"""
+        self.wav = wavio.read(file)
 
         # framerate
-        self.fs = self.wav.getframerate()
+        self.fs = self.wav.rate
 
-        # number of frames in a file
-        self.frames = self.wav.getnframes() 
+        # track data
+        self.data = self.wav.data
 
-        # length of a file in seconds
-        self.length = self.frames / self.fs 
+        # dimensions of the data which is (nSamples, nChannels)
+        dim = np.shape(self.data)
 
-        # number of bytes per sample
-        self.bytes = self.wav.getsampwidth() 
+        # number of samples in a file
+        self.nSamples = dim[0]
 
         # number of channels, 1 - mono, 2 - stereo
-        self.channels = self.wav.getnchannels() 
+        self.nChannels = dim[1]
 
-        # save data as an array
-        self.samples = []
+        # length of a file in seconds
+        self.length = self.nSamples / self.fs
 
-      
-        for i in range(0, self.frames):
-            wavData = self.wav.readframes(1)
-            data = struct.unpack("%ih"%self.channels, wavData)
-            self.samples.append(int(data[0]))
-
-        self.samples = np.array(self.samples)
-        self.wav.close()
+        # number of bytes per sample
+        self.bytes = self.wav.sampwidth
 
 
     def play(self):
         """Play the file"""
-        play = sa.play_buffer(self.samples, self.channels, self.bytes, self.fs)
+        play = sa.play_buffer(self.data, self.nChannels, self.bytes, self.fs)
         play.wait_done()
 
