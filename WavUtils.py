@@ -51,5 +51,24 @@ class WavFile:
             current = self.data[i]
             edited = self.data[i - delaySamples] * decayFactor
             
-            current += edited.astype(int)
+            current += edited.astype(dtype = np.int16)
         
+
+    def distortion_effect(self, inputGain):
+        """Add distortion effect
+
+
+        """ 
+        # scale factor so the algorithm works properly
+        # 32768 for 16-bit .wav
+        sFactor = 2**((self.bytes * 8) - 1)
+        scaledData = (self.data).astype(float) / sFactor
+
+        tempData = np.empty(np.shape(scaledData))
+        for i in range(self.nSamples):
+             
+            sign = np.sign(scaledData[i])
+            tempData[i] = sign * (1 - np.exp(-np.abs(scaledData[i] * inputGain)))
+
+        tempData *= sFactor
+        self.data = tempData.astype(dtype = np.int16)
