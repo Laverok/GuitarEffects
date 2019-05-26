@@ -15,13 +15,9 @@ class WavFile:
         self.data = np.array(self.wav.data)
 
         # dimensions of the data which is (nSamples, nChannels)
-        dim = np.shape(self.data)
-
-        # number of samples in a file
-        self.nSamples = dim[0]
-
-        # number of channels, 1 - mono, 2 - stereo
-        self.nChannels = dim[1]
+        # nSamples: number of samples in a file
+        # nChannels: number of channels, 1 - mono, 2 - stereo
+        (self.nSamples, self.nChannels) = np.shape(self.data)
 
         # length of a file in seconds
         self.length = self.nSamples / self.fs
