@@ -1,10 +1,12 @@
 import numpy as np
 import wavio
 import WavUtils as util
+import wx
+from Gui import *
 
-wavTrack = util.WavFile("./sample/stereo/Do rana.wav")
 
-#wavTrack.echo_effect(2, 0.4)
-wavTrack.distortion_effect(6)
-wavTrack.play()
-wavTrack.write_to_file("./output/out.wav" )
+if __name__ == '__main__':
+    mainApp = wx.App()
+    mainFrame = MainWindow(parent = None, id = -1) 
+    mainFrame.Show()       
+    mainApp.MainLoop()

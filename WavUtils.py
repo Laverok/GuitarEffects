@@ -55,9 +55,9 @@ class WavFile:
         
 
     def distortion_effect(self, inputGain):
-        """Add distortion effect
+        """Add distortion effect (exponential function)
 
-
+           inputGain: the higher the more distortion
         """ 
         # scale factor so the algorithm works properly
         # 32768 for 16-bit .wav
