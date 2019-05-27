@@ -33,8 +33,8 @@ class MainWindow(wx.Frame):
         self.SetMenuBar(menuBar)
         
         # Status boxes
-        boxWidth = 110
-        boxHeight = 300
+        boxWidth = 100
+        boxHeight = 320
         boxSize = (boxWidth, boxHeight)
 
         initialWidth = 1
@@ -51,10 +51,14 @@ class MainWindow(wx.Frame):
         temp1Box = wx.StaticBox(mainPanel, wx.ID_NEW, "Effect no. 3", pos = pos3, size = boxSize )
         temp2Box = wx.StaticBox(mainPanel, wx.ID_NEW, "Effect no. 4", pos = pos4, size = boxSize )
 
-        # Text boxes for input
+        # Buttons
+        buttonSize = (boxWidth, boxWidth / 2)
+        playOrigButton = wx.Button(mainPanel, wx.ID_NEW, "Play original", pos = (0, 20), size = buttonSize)
+        playModiButton = wx.Button(mainPanel, wx.ID_NEW, "Play modified", pos = (0, 70), size = buttonSize)
 
+        # Text boxes
         
-
+    
     
     def closewindow(self, event):
         """Close a window"""
