@@ -7,7 +7,7 @@ class MainWindow(wx.Frame):
 
     def __init__(self, parent, id):
         # Create main window and add basic functionality
-        wx.Frame.__init__(self, parent, id, 'Guitar Effects', size = (600, 400))
+        wx.Frame.__init__(self, parent, id, 'Guitar Effects', size = (640, 480))
         mainPanel = wx.Panel(self)
         self.Bind(wx.EVT_CLOSE, self.closewindow)
 
@@ -18,11 +18,11 @@ class MainWindow(wx.Frame):
         fileMenu = wx.Menu()
 
         # File/Open
-        fileOpen = fileMenu.Append(wx.ID_NEW, "Open")
+        fileOpen = fileMenu.Append(wx.ID_ANY, "Open")
         self.Bind(wx.EVT_MENU, self.openfile, fileOpen)
 
         # File/Save
-        fileSave = fileMenu.Append(wx.ID_NEW, "Save as")
+        fileSave = fileMenu.Append(wx.ID_ANY, "Save as")
         self.Bind(wx.EVT_MENU, self.savefile, fileSave)
 
         # File/Exit
@@ -33,8 +33,8 @@ class MainWindow(wx.Frame):
         self.SetMenuBar(menuBar)
         
         # Status boxes
-        boxWidth = 100
-        boxHeight = 320
+        boxWidth = 120
+        boxHeight = 400
         boxSize = (boxWidth, boxHeight)
 
         initialWidth = 1
@@ -45,21 +45,31 @@ class MainWindow(wx.Frame):
         pos3 = (initialWidth + 3*boxWidth, initialHeight)
         pos4 = (initialWidth + 4*boxWidth, initialHeight)
 
-        playBox = wx.StaticBox(mainPanel, wx.ID_NEW, "Play", pos = pos0, size = boxSize )
-        echoBox = wx.StaticBox(mainPanel, wx.ID_NEW, "Echo", pos = pos1, size = boxSize )
-        distBox = wx.StaticBox(mainPanel, wx.ID_NEW, "Distortion", pos = pos2, size = boxSize )
-        temp1Box = wx.StaticBox(mainPanel, wx.ID_NEW, "Effect no. 3", pos = pos3, size = boxSize )
-        temp2Box = wx.StaticBox(mainPanel, wx.ID_NEW, "Effect no. 4", pos = pos4, size = boxSize )
+        playBox = wx.StaticBox(mainPanel, wx.ID_ANY, "Play", pos = pos0, size = boxSize )
+        echoBox = wx.StaticBox(mainPanel, wx.ID_ANY, "Echo", pos = pos1, size = boxSize )
+        distBox = wx.StaticBox(mainPanel, wx.ID_ANY, "Distortion", pos = pos2, size = boxSize )
+        temp1Box = wx.StaticBox(mainPanel, wx.ID_ANY, "Effect no. 3", pos = pos3, size = boxSize )
+        temp2Box = wx.StaticBox(mainPanel, wx.ID_ANY, "Effect no. 4", pos = pos4, size = boxSize )
 
-        # Buttons
+        # Play box
         buttonSize = (boxWidth, boxWidth / 2)
-        playOrigButton = wx.Button(mainPanel, wx.ID_NEW, "Play original", pos = (0, 20), size = buttonSize)
-        playModiButton = wx.Button(mainPanel, wx.ID_NEW, "Play modified", pos = (0, 70), size = buttonSize)
+        playOrigButton = wx.Button(mainPanel, wx.ID_ANY, "Play original", pos = (0, 20), size = buttonSize)
+        playModiButton = wx.Button(mainPanel, wx.ID_ANY, "Play modified", pos = (0, 70), size = buttonSize)
 
-        # Text boxes
+        # Echo box
+        textSize = (50, 20)
+
+        wx.StaticText(mainPanel, wx.ID_ANY, "Delay [s]", pos = (130, 30))
+        echoDelayInput = wx.TextCtrl(mainPanel, wx.ID_ANY, pos = (130, 50), size = textSize)
+
+        wx.StaticText(mainPanel, wx.ID_ANY, "Decay factor (0-1)", pos = (130, 70))
+        echoDecayInput = wx.TextCtrl(mainPanel, wx.ID_ANY, pos = (130, 90), size = textSize)
         
-    
-    
+        # Distortion box
+        wx.StaticText(mainPanel, wx.ID_ANY, "Input gain (>1)", pos = (250, 30))
+        echoDelayInput = wx.TextCtrl(mainPanel, wx.ID_ANY, pos = (250, 50), size = textSize)
+
+
     def closewindow(self, event):
         """Close a window"""
         self.Destroy()
