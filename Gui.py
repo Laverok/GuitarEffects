@@ -21,6 +21,10 @@ class MainWindow(wx.Frame):
         fileOpen = fileMenu.Append(wx.ID_NEW, "Open")
         self.Bind(wx.EVT_MENU, self.openfile, fileOpen)
 
+        # File/Save
+        fileSave = fileMenu.Append(wx.ID_NEW, "Save as")
+        self.Bind(wx.EVT_MENU, self.savefile, fileSave)
+
         # File/Exit
         fileExit = fileMenu.Append(wx.ID_EXIT, "Exit")
         self.Bind(wx.EVT_MENU, self.closewindow, fileExit)
@@ -34,14 +38,26 @@ class MainWindow(wx.Frame):
         """Close a window"""
         self.Destroy()
 
-    def openfile(self, event):
 
+    def openfile(self, event):
+        """"Open a file"""
         root = tk.Tk()
         root.withdraw()
 
-        dialogTitle = "Select a .wav file"
+        dialogTitle = "Select a file"
         ftypes = [("WAV", ".wav")]
 
         filepath = filedialog.askopenfilename(initialdir = "./", title = dialogTitle, filetypes = ftypes)
 
         root.destroy()
+
+    def savefile(self, event):
+        """Save a file"""
+
+        root = tk.Tk()
+        root.withdraw()
+
+        dialogTitle = "Select a file"
+        ftypes = [("WAV", ".wav")]
+
+        filepath = filedialog.asksaveasfilename(initialdir = "./", title = dialogTitle, filetypes = ftypes)
