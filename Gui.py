@@ -118,4 +118,9 @@ class MainWindow(wx.Frame):
         dialogTitle = "Select a file"
         ftypes = [("WAV", ".wav")]
 
-        filepath = filedialog.asksaveasfilename(initialdir = "./", title = dialogTitle, filetypes = ftypes)
+        filepath = filedialog.asksaveasfilename(initialdir = "./", title = dialogTitle, filetypes = ftypes, defaultextension = ".wav")
+
+        if filepath != "":
+            self.wavInterface.save_wavfile(filepath)
+
+        root.destroy()

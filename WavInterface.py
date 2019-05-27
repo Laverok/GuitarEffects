@@ -14,4 +14,9 @@ class WavInterface:
 
         if file != "":
             self.origWav = WavFile(file)
-            print(file)
+
+    def save_wavfile(self, file):
+        """Saves a modivied .WAV file"""
+        
+        if file != "":
+            self.modiWav.write_to_file(file)
