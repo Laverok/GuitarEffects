@@ -53,21 +53,25 @@ class MainWindow(wx.Frame):
 
         # Play box
         buttonSize = (boxWidth, boxWidth / 2)
-        playOrigButton = wx.Button(mainPanel, wx.ID_ANY, "Play original", pos = (0, 20), size = buttonSize)
-        playModiButton = wx.Button(mainPanel, wx.ID_ANY, "Play modified", pos = (0, 70), size = buttonSize)
+        playOrigButton = wx.Button(mainPanel, wx.ID_ANY, "Play original", pos = (0, 30), size = buttonSize)
+        playModiButton = wx.Button(mainPanel, wx.ID_ANY, "Play modified", pos = (0, 100), size = buttonSize)
 
         # Echo box
         textSize = (50, 20)
 
-        wx.StaticText(mainPanel, wx.ID_ANY, "Delay [s]", pos = (130, 30))
-        echoDelayInput = wx.TextCtrl(mainPanel, wx.ID_ANY, pos = (130, 50), size = textSize)
+        echoCheck = wx.CheckBox(mainPanel, wx.ID_ANY, "Apply effect", pos = (130, 30))
 
-        wx.StaticText(mainPanel, wx.ID_ANY, "Decay factor (0-1)", pos = (130, 70))
-        echoDecayInput = wx.TextCtrl(mainPanel, wx.ID_ANY, pos = (130, 90), size = textSize)
+        wx.StaticText(mainPanel, wx.ID_ANY, "Delay [s]", pos = (130, 60))
+        echoDelayInput = wx.TextCtrl(mainPanel, wx.ID_ANY, pos = (130, 80), size = textSize)
+
+        wx.StaticText(mainPanel, wx.ID_ANY, "Decay factor (0-1)", pos = (130, 110))
+        echoDecayInput = wx.TextCtrl(mainPanel, wx.ID_ANY, pos = (130, 130), size = textSize)
         
         # Distortion box
-        wx.StaticText(mainPanel, wx.ID_ANY, "Input gain (>1)", pos = (250, 30))
-        echoDelayInput = wx.TextCtrl(mainPanel, wx.ID_ANY, pos = (250, 50), size = textSize)
+        distCheck = wx.CheckBox(mainPanel, wx.ID_ANY, "Apply effect", pos = (250, 30))
+
+        wx.StaticText(mainPanel, wx.ID_ANY, "Input gain (>1)", pos = (250, 60))
+        echoDelayInput = wx.TextCtrl(mainPanel, wx.ID_ANY, pos = (250, 80), size = textSize)
 
 
     def closewindow(self, event):
