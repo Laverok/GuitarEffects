@@ -65,8 +65,12 @@ class MainWindow(wx.Frame):
 
         # Play box
         buttonSize = (boxWidth, boxWidth / 2)
+
         playOrigButton = wx.Button(mainPanel, wx.ID_ANY, "Play original", pos = (0, 30), size = buttonSize)
+        self.Bind(wx.EVT_BUTTON, self.play_orig_wavfile, playOrigButton)
+
         playModiButton = wx.Button(mainPanel, wx.ID_ANY, "Play modified", pos = (0, 120), size = buttonSize)
+        self.Bind(wx.EVT_BUTTON, self.play_modi_wavfile, playModiButton)
 
         # Echo box
         textSize = (50, 20)
@@ -124,3 +128,15 @@ class MainWindow(wx.Frame):
             self.wavInterface.save_wavfile(filepath)
 
         root.destroy()
+
+    def play_orig_wavfile(self, event):
+        """Play original sound"""
+
+        if self.wavInterface.origWav.fileName != "":
+            self.wavInterface.origWav.play()
+
+    def play_modi_wavfile(self, event):
+        """Play modified sound"""
+
+        if self.wavInterface.modiWav.fileName != "":
+            self.wavInterface.modiWav.play()

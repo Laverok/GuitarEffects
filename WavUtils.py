@@ -8,26 +8,30 @@ class WavFile:
 
        file: path to the .wav file
     """
-    def __init__(self, file):
+    def __init__(self, file = ""):
         """Read the audio file and save all the important data"""
-        self.wav = wavio.read(file)
 
-        # framerate
-        self.fs = self.wav.rate
+        self.fileName = file
+        
+        if file != "":
+            self.wav = wavio.read(file)
 
-        # track data
-        self.data = np.array(self.wav.data)
+            # framerate
+            self.fs = self.wav.rate
 
-        # dimensions of the data which is (nSamples, nChannels)
-        # nSamples: number of samples in a file
-        # nChannels: number of channels, 1 - mono, 2 - stereo
-        (self.nSamples, self.nChannels) = np.shape(self.data)
+            # track data
+            self.data = np.array(self.wav.data)
 
-        # length of a file in seconds
-        self.length = self.nSamples / self.fs
+            # dimensions of the data which is (nSamples, nChannels)
+            # nSamples: number of samples in a file
+            # nChannels: number of channels, 1 - mono, 2 - stereo
+            (self.nSamples, self.nChannels) = np.shape(self.data)
 
-        # number of bytes per sample
-        self.bytes = self.wav.sampwidth
+            # length of a file in seconds
+            self.length = self.nSamples / self.fs
+
+            # number of bytes per sample
+            self.bytes = self.wav.sampwidth
 
 
     def play(self):
