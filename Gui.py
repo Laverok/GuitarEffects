@@ -11,7 +11,7 @@ class MainWindow(wx.Frame):
         mainPanel = wx.Panel(self)
         self.Bind(wx.EVT_CLOSE, self.closewindow)
 
-        # Menu bar
+        ### Menu bar
         menuBar = wx.MenuBar()
 
         # 'File' menu
@@ -30,7 +30,8 @@ class MainWindow(wx.Frame):
         self.Bind(wx.EVT_MENU, self.closewindow, fileExit)
 
         menuBar.Append(fileMenu, 'File')
-
+        self.SetMenuBar(menuBar)
+        
         # Status boxes
         boxWidth = 110
         boxHeight = 300
@@ -44,13 +45,15 @@ class MainWindow(wx.Frame):
         pos3 = (initialWidth + 3*boxWidth, initialHeight)
         pos4 = (initialWidth + 4*boxWidth, initialHeight)
 
-        echoPlay = wx.StaticBox(mainPanel, wx.ID_NEW, "Play", pos = pos0, size = boxSize )
+        playBox = wx.StaticBox(mainPanel, wx.ID_NEW, "Play", pos = pos0, size = boxSize )
         echoBox = wx.StaticBox(mainPanel, wx.ID_NEW, "Echo", pos = pos1, size = boxSize )
-        echoDist = wx.StaticBox(mainPanel, wx.ID_NEW, "Distortion", pos = pos2, size = boxSize )
-        echoTemp1 = wx.StaticBox(mainPanel, wx.ID_NEW, "Effect no. 3", pos = pos3, size = boxSize )
-        echoTemp2 = wx.StaticBox(mainPanel, wx.ID_NEW, "Effect no. 4", pos = pos4, size = boxSize )
+        distBox = wx.StaticBox(mainPanel, wx.ID_NEW, "Distortion", pos = pos2, size = boxSize )
+        temp1Box = wx.StaticBox(mainPanel, wx.ID_NEW, "Effect no. 3", pos = pos3, size = boxSize )
+        temp2Box = wx.StaticBox(mainPanel, wx.ID_NEW, "Effect no. 4", pos = pos4, size = boxSize )
 
-  
+        # Text boxes for input
+
+        
 
     
     def closewindow(self, event):
