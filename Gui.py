@@ -44,17 +44,19 @@ class MainWindow(wx.Frame):
         pos2 = (initialWidth + 2*boxWidth, initialHeight)
         pos3 = (initialWidth + 3*boxWidth, initialHeight)
         pos4 = (initialWidth + 4*boxWidth, initialHeight)
+        pos5 = (initialWidth, initialHeight + boxHeight/2)
 
-        playBox = wx.StaticBox(mainPanel, wx.ID_ANY, "Play", pos = pos0, size = boxSize )
+        playBox = wx.StaticBox(mainPanel, wx.ID_ANY, "Play", pos = pos0, size = (boxWidth, boxHeight/2) )
         echoBox = wx.StaticBox(mainPanel, wx.ID_ANY, "Echo", pos = pos1, size = boxSize )
         distBox = wx.StaticBox(mainPanel, wx.ID_ANY, "Distortion", pos = pos2, size = boxSize )
         temp1Box = wx.StaticBox(mainPanel, wx.ID_ANY, "Effect no. 3", pos = pos3, size = boxSize )
         temp2Box = wx.StaticBox(mainPanel, wx.ID_ANY, "Effect no. 4", pos = pos4, size = boxSize )
+        applyBox = wx.StaticBox(mainPanel, wx.ID_ANY, "Apply effects", pos = pos5, size = (boxWidth, boxHeight/2) )
 
         # Play box
         buttonSize = (boxWidth, boxWidth / 2)
         playOrigButton = wx.Button(mainPanel, wx.ID_ANY, "Play original", pos = (0, 30), size = buttonSize)
-        playModiButton = wx.Button(mainPanel, wx.ID_ANY, "Play modified", pos = (0, 100), size = buttonSize)
+        playModiButton = wx.Button(mainPanel, wx.ID_ANY, "Play modified", pos = (0, 120), size = buttonSize)
 
         # Echo box
         textSize = (50, 20)
@@ -73,6 +75,8 @@ class MainWindow(wx.Frame):
         wx.StaticText(mainPanel, wx.ID_ANY, "Input gain (>1)", pos = (250, 60))
         echoDelayInput = wx.TextCtrl(mainPanel, wx.ID_ANY, pos = (250, 80), size = textSize)
 
+        # Apply effects box
+        applyButton = wx.Button(mainPanel, wx.ID_ANY, "Apply all effects", pos = (0, 270), size = buttonSize)
 
     def closewindow(self, event):
         """Close a window"""
