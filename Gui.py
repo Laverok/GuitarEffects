@@ -1,11 +1,21 @@
 import wx
 import tkinter as tk
 from tkinter import filedialog
-import WavUtils as util
+from WavUtils import *
+from WavInterface import *
+
 
 class MainWindow(wx.Frame):
+    """Class representing main window of the app
+       Derived from wx.Frame
+    """
+
 
     def __init__(self, parent, id):
+
+        # Initialize an interface which is the engine of the app
+        self.wavInterface = WavInterface()
+
         # Create main window and add basic functionality
         wx.Frame.__init__(self, parent, id, 'Guitar Effects', size = (640, 480))
         mainPanel = wx.Panel(self)
@@ -61,7 +71,7 @@ class MainWindow(wx.Frame):
         # Echo box
         textSize = (50, 20)
 
-        echoCheck = wx.CheckBox(mainPanel, wx.ID_ANY, "Apply effect", pos = (130, 30))
+        echoCheck = wx.CheckBox(mainPanel, wx.ID_ANY, "Apply", pos = (130, 30))
 
         wx.StaticText(mainPanel, wx.ID_ANY, "Delay [s]", pos = (130, 60))
         echoDelayInput = wx.TextCtrl(mainPanel, wx.ID_ANY, pos = (130, 80), size = textSize)
@@ -70,13 +80,14 @@ class MainWindow(wx.Frame):
         echoDecayInput = wx.TextCtrl(mainPanel, wx.ID_ANY, pos = (130, 130), size = textSize)
         
         # Distortion box
-        distCheck = wx.CheckBox(mainPanel, wx.ID_ANY, "Apply effect", pos = (250, 30))
+        distCheck = wx.CheckBox(mainPanel, wx.ID_ANY, "Apply", pos = (250, 30))
 
         wx.StaticText(mainPanel, wx.ID_ANY, "Input gain (>1)", pos = (250, 60))
         echoDelayInput = wx.TextCtrl(mainPanel, wx.ID_ANY, pos = (250, 80), size = textSize)
 
         # Apply effects box
         applyButton = wx.Button(mainPanel, wx.ID_ANY, "Apply all effects", pos = (0, 270), size = buttonSize)
+
 
     def closewindow(self, event):
         """Close a window"""
@@ -93,11 +104,14 @@ class MainWindow(wx.Frame):
 
         filepath = filedialog.askopenfilename(initialdir = "./", title = dialogTitle, filetypes = ftypes)
 
+        if filepath != "":
+            self.wavInterface.set_orig_wavfile(filepath)
+
         root.destroy()
+
 
     def savefile(self, event):
         """Save a file"""
-
         root = tk.Tk()
         root.withdraw()
 

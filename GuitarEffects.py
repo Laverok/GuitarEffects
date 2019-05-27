@@ -1,7 +1,8 @@
 import numpy as np
 import wavio
-import WavUtils as util
 import wx
+from WavUtils import *
+from WavInterface import *
 from Gui import *
 
 

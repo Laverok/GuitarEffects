@@ -2,8 +2,12 @@ import numpy as np
 import wavio
 import simpleaudio as sa
 
-class WavFile:
 
+class WavFile:
+    """Class representing a .WAV file
+
+       file: path to the .wav file
+    """
     def __init__(self, file):
         """Read the audio file and save all the important data"""
         self.wav = wavio.read(file)
