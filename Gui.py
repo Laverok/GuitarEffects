@@ -56,6 +56,10 @@ class MainWindow(wx.Frame):
         temp1Box = wx.StaticBox(mainPanel, wx.ID_ANY, "Effect no. 3", pos = (370, 50), size = vertBoxSize )
         temp2Box = wx.StaticBox(mainPanel, wx.ID_ANY, "Effect no. 4", pos = (490, 50), size = vertBoxSize )
 
+        # Info box
+        self.trackNameText = wx.StaticText(mainPanel, wx.ID_ANY, "Track name: ", pos = (20, 20))
+        self.trackLengthText = wx.StaticText(mainPanel, wx.ID_ANY, "Track length: ", pos = (420, 20))
+
         # Play box
         playOrigButton = wx.Button(mainPanel, wx.ID_ANY, "Play original", pos = (20, 80), size = buttonSize)
         self.Bind(wx.EVT_BUTTON, self.play_orig_wavfile, playOrigButton)
@@ -99,7 +103,9 @@ class MainWindow(wx.Frame):
 
         if filepath != "":
             self.wavInterface.set_orig_wavfile(filepath)
-
+            self.trackNameText.SetLabel("Track name: " + self.wavInterface.origWav.get_track_name()) 
+            self.trackLengthText.SetLabel("Track length: " + self.wavInterface.origWav.get_track_length())
+            
         root.destroy()
 
 
@@ -118,11 +124,13 @@ class MainWindow(wx.Frame):
 
         root.destroy()
 
+
     def play_orig_wavfile(self, event):
         """Play original sound"""
 
         if self.wavInterface.origWav.fileName != "":
             self.wavInterface.origWav.play()
+
 
     def play_modi_wavfile(self, event):
         """Play modified sound"""

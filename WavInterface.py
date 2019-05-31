@@ -11,6 +11,7 @@ class WavInterface:
     def __init__(self):
         self.origWav = WavFile()
         self.modiWav = WavFile()
+        self.fileName = self.origWav.get_track_name()
         pass
 
     def set_orig_wavfile(self, file):

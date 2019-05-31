@@ -40,6 +40,38 @@ class WavFile:
 
         return self.fileName[lastSlashIndex + 1:]
 
+    def get_track_length(self):
+        """Return a string in a format 'hh/mm/ss' """
+        h = int(self.length / 3600)
+        m = int((self.length - h * 3600) / 60)
+        s = int(self.length - h * 3600 - m * 60)
+
+        hStr, mStr, sStr = "", "", ""
+
+        if h == 0:
+            hStr = "00"
+        elif h > 9:
+            hStr = str(h)
+        else:
+            hStr = "0"+str(h)
+
+        if m == 0:
+            mStr = "00"
+        elif m > 9:
+            mStr = str(m)
+        else:
+            mStr = "0"+str(m)
+
+        if s == 0:
+            sStr = "00"
+        elif s > 9:
+            sStr = str(s)
+        else:
+            sStr = "0"+str(s)
+
+        time = hStr + ":" + mStr + ":" + sStr
+        return time
+
     def play(self):
         """Play the sound"""
         play = sa.play_buffer(self.data, self.nChannels, self.bytes, self.fs)
