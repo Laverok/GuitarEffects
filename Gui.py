@@ -68,7 +68,8 @@ class MainWindow(wx.Frame):
         self.Bind(wx.EVT_BUTTON, self.play_modi_wavfile, self.playModiButton)
 
         # Apply effects box
-        self.applyButton = wx.Button(self.mainPanel, wx.ID_ANY, "Apply all effects", pos = (20, 270), size = buttonSize)
+        self.applyEffectsButton = wx.Button(self.mainPanel, wx.ID_ANY, "Apply all effects", pos = (20, 270), size = buttonSize)
+        self.Bind(wx.EVT_BUTTON, self.apply_effects, self.applyEffectsButton)
 
         # Echo box
         self.echoCheck = wx.CheckBox(self.mainPanel, wx.ID_ANY, "Apply", pos = (140, 80))
@@ -78,12 +79,12 @@ class MainWindow(wx.Frame):
 
         wx.StaticText(self.mainPanel, wx.ID_ANY, "Decay factor (0 - 1)", pos = (140, 180))
         self.echoDecayInput = wx.TextCtrl(self.mainPanel, wx.ID_ANY, pos = (140, 200), size = textSize)
-        
+
         # Distortion box
         self.distCheck = wx.CheckBox(self.mainPanel, wx.ID_ANY, "Apply", pos = (260, 80))
 
         wx.StaticText(self.mainPanel, wx.ID_ANY, "Input gain (>1)", pos = (260, 120))
-        self.echoDelayInput = wx.TextCtrl(self.mainPanel, wx.ID_ANY, pos = (260, 140), size = textSize)
+        self.distGainInput = wx.TextCtrl(self.mainPanel, wx.ID_ANY, pos = (260, 140), size = textSize)
 
 
     def closewindow(self, event):
@@ -137,3 +138,25 @@ class MainWindow(wx.Frame):
 
         if self.wavInterface.modiWav.fileName != "":
             self.wavInterface.modiWav.play()
+
+
+    def apply_echo(self):
+        """Apply echo"""
+        delay = int(self.echoDelayInput.GetValue())
+        decayFactor = float(self.echoDelayInput.GetValue())
+        self.wavInterface.apply_echo(delay, decayFactor)
+
+
+    def apply_distortion(self):
+        """Apply distortion"""
+        inputGain = int(self.distGainInput.GetValue())
+        self.wavInterface.apply_distortion(inputGain)
+
+
+    def apply_effects(self, event):
+        """Apply all effects"""
+        if self.echoCheck.GetValue():
+            self.apply_echo()
+        
+        if self.distCheck.GetValue():
+            self.apply_distortion()

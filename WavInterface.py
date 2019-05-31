@@ -26,3 +26,11 @@ class WavInterface:
         
         if file != "":
             self.modiWav.write_to_file(file)
+
+    def apply_echo(self, delay, decayFactor):
+        """Apply echo to original wav file"""
+        self.modiWav.echo_effect(delay, decayFactor)
+
+    def apply_distortion(self, inputGain):
+        """Apply distortion to original wav file"""
+        self.modiWav.distortion_effect(inputGain)
