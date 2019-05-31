@@ -10,7 +10,6 @@ class MainWindow(wx.Frame):
        Derived from wx.Frame
     """
 
-
     def __init__(self, parent, id):
 
         # Initialize an interface which is the engine of the app

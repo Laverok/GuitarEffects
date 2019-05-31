@@ -34,6 +34,12 @@ class WavFile:
             self.bytes = self.wav.sampwidth
 
 
+    def get_track_name(self):
+        """Return a track name 'name.wav' """
+        lastSlashIndex = self.fileName.rfind('/')
+
+        return self.fileName[lastSlashIndex + 1:]
+
     def play(self):
         """Play the sound"""
         play = sa.play_buffer(self.data, self.nChannels, self.bytes, self.fs)
