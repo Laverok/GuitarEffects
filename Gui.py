@@ -42,55 +42,45 @@ class MainWindow(wx.Frame):
         menuBar.Append(fileMenu, 'File')
         self.SetMenuBar(menuBar)
         
-        # Status boxes
-        boxWidth = 120
-        boxHeight = 400
-        boxSize = (boxWidth, boxHeight)
-
-        initialWidth = 1
-        initialHeight = 0
-        pos0 = (initialWidth, initialHeight)
-        pos1 = (initialWidth + boxWidth, initialHeight)
-        pos2 = (initialWidth + 2*boxWidth, initialHeight)
-        pos3 = (initialWidth + 3*boxWidth, initialHeight)
-        pos4 = (initialWidth + 4*boxWidth, initialHeight)
-        pos5 = (initialWidth, initialHeight + boxHeight/2)
-
-        playBox = wx.StaticBox(mainPanel, wx.ID_ANY, "Play", pos = pos0, size = (boxWidth, boxHeight/2) )
-        echoBox = wx.StaticBox(mainPanel, wx.ID_ANY, "Echo", pos = pos1, size = boxSize )
-        distBox = wx.StaticBox(mainPanel, wx.ID_ANY, "Distortion", pos = pos2, size = boxSize )
-        temp1Box = wx.StaticBox(mainPanel, wx.ID_ANY, "Effect no. 3", pos = pos3, size = boxSize )
-        temp2Box = wx.StaticBox(mainPanel, wx.ID_ANY, "Effect no. 4", pos = pos4, size = boxSize )
-        applyBox = wx.StaticBox(mainPanel, wx.ID_ANY, "Apply effects", pos = pos5, size = (boxWidth, boxHeight/2) )
-
-        # Play box
-        buttonSize = (boxWidth, boxWidth / 2)
-
-        playOrigButton = wx.Button(mainPanel, wx.ID_ANY, "Play original", pos = (0, 30), size = buttonSize)
-        self.Bind(wx.EVT_BUTTON, self.play_orig_wavfile, playOrigButton)
-
-        playModiButton = wx.Button(mainPanel, wx.ID_ANY, "Play modified", pos = (0, 120), size = buttonSize)
-        self.Bind(wx.EVT_BUTTON, self.play_modi_wavfile, playModiButton)
-
-        # Echo box
+        ### Status boxes
+        horiBoxSize = (600, 50)
+        vertBoxSize = (120, 320)
+        vertBoxHalfSize = (120, 160)
+        buttonSize = (100, 50)
         textSize = (50, 20)
 
-        echoCheck = wx.CheckBox(mainPanel, wx.ID_ANY, "Apply", pos = (130, 30))
+        infoBox = wx.StaticBox(mainPanel, wx.ID_ANY, "Track info", pos = (10, 0), size = horiBoxSize )
+        playBox = wx.StaticBox(mainPanel, wx.ID_ANY, "Play", pos = (10, 50), size = vertBoxHalfSize )
+        applyBox = wx.StaticBox(mainPanel, wx.ID_ANY, "Apply effects", pos = (10, 210), size = vertBoxHalfSize )
+        echoBox = wx.StaticBox(mainPanel, wx.ID_ANY, "Echo", pos = (130, 50), size = vertBoxSize )
+        distBox = wx.StaticBox(mainPanel, wx.ID_ANY, "Distortion", pos = (250, 50), size = vertBoxSize )
+        temp1Box = wx.StaticBox(mainPanel, wx.ID_ANY, "Effect no. 3", pos = (370, 50), size = vertBoxSize )
+        temp2Box = wx.StaticBox(mainPanel, wx.ID_ANY, "Effect no. 4", pos = (490, 50), size = vertBoxSize )
 
-        wx.StaticText(mainPanel, wx.ID_ANY, "Delay [s]", pos = (130, 60))
-        echoDelayInput = wx.TextCtrl(mainPanel, wx.ID_ANY, pos = (130, 80), size = textSize)
+        # Play box
+        playOrigButton = wx.Button(mainPanel, wx.ID_ANY, "Play original", pos = (20, 80), size = buttonSize)
+        self.Bind(wx.EVT_BUTTON, self.play_orig_wavfile, playOrigButton)
 
-        wx.StaticText(mainPanel, wx.ID_ANY, "Decay factor (0-1)", pos = (130, 110))
-        echoDecayInput = wx.TextCtrl(mainPanel, wx.ID_ANY, pos = (130, 130), size = textSize)
-        
-        # Distortion box
-        distCheck = wx.CheckBox(mainPanel, wx.ID_ANY, "Apply", pos = (250, 30))
-
-        wx.StaticText(mainPanel, wx.ID_ANY, "Input gain (>1)", pos = (250, 60))
-        echoDelayInput = wx.TextCtrl(mainPanel, wx.ID_ANY, pos = (250, 80), size = textSize)
+        playModiButton = wx.Button(mainPanel, wx.ID_ANY, "Play modified", pos = (20, 140), size = buttonSize)
+        self.Bind(wx.EVT_BUTTON, self.play_modi_wavfile, playModiButton)
 
         # Apply effects box
-        applyButton = wx.Button(mainPanel, wx.ID_ANY, "Apply all effects", pos = (0, 270), size = buttonSize)
+        applyButton = wx.Button(mainPanel, wx.ID_ANY, "Apply all effects", pos = (20, 270), size = buttonSize)
+
+        # Echo box
+        echoCheck = wx.CheckBox(mainPanel, wx.ID_ANY, "Apply", pos = (140, 80))
+
+        wx.StaticText(mainPanel, wx.ID_ANY, "Delay [s]", pos = (140, 120))
+        echoDelayInput = wx.TextCtrl(mainPanel, wx.ID_ANY, pos = (140, 140), size = textSize)
+
+        wx.StaticText(mainPanel, wx.ID_ANY, "Decay factor (0 - 1)", pos = (140, 180))
+        echoDecayInput = wx.TextCtrl(mainPanel, wx.ID_ANY, pos = (140, 200), size = textSize)
+        
+        # Distortion box
+        distCheck = wx.CheckBox(mainPanel, wx.ID_ANY, "Apply", pos = (260, 80))
+
+        wx.StaticText(mainPanel, wx.ID_ANY, "Input gain (>1)", pos = (260, 120))
+        echoDelayInput = wx.TextCtrl(mainPanel, wx.ID_ANY, pos = (260, 140), size = textSize)
 
 
     def closewindow(self, event):
