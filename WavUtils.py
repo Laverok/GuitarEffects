@@ -40,6 +40,7 @@ class WavFile:
 
         return self.fileName[lastSlashIndex + 1:]
 
+
     def get_track_length(self):
         """Return a string in a format 'hh/mm/ss' """
         h = int(self.length / 3600)
@@ -71,6 +72,7 @@ class WavFile:
 
         time = hStr + ":" + mStr + ":" + sStr
         return time
+
 
     def play(self):
         """Play the sound"""
