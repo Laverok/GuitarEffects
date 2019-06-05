@@ -77,7 +77,7 @@ class WavFile:
     def play(self):
         """Play the sound"""
         play = sa.play_buffer(self.data, self.nChannels, self.bytes, self.fs)
-
+        play.wait_done()
 
     def write_to_file(self, file):
         """Save file in a .wav format"""
@@ -88,7 +88,7 @@ class WavFile:
         """Add echo effect
 
            delay: in seconds
-           decayFactor: [0,1]  
+           decayFactor: 0-1 
         """
         # convert delay in seconds to delay in number of samples
         delaySamples = delay * self.fs
@@ -119,3 +119,27 @@ class WavFile:
 
         tempData *= sFactor
         self.data = tempData.astype(dtype = np.int16)
+
+    def tremolo_effect():
+        """Add tremolo effect"""
+        pass
+
+    def flanging_effect(self, delay, oscRange, fSweep):
+        """Add flanging effect
+        
+        delay(in ms): 0.025-2
+        oscRange:        10-200
+        fSweep(Hz):   0.25-2
+        """
+        
+        delaySamples = round(delay / 1000 * self.fs);
+        
+        fNorm = 2 * np.pi * fSweep/self.fs;
+
+        tempData = np.empty(np.shape(self.data), dtype = np.int16)
+
+        for i in range(0, self.nSamples-delaySamples-oscRange):
+            
+            tempData[i] = self.data[i] + self.data[i+delaySamples+int(round(oscRange*np.sin(fNorm * i)))];
+
+        self.data = tempData;
