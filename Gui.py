@@ -191,9 +191,7 @@ class MainWindow(wx.Frame):
 
     def apply_effects(self, event):
         """Apply all effects"""
-        if self.echoCheck.GetValue():
-            self.apply_echo()
-        
+  
         if self.distCheck.GetValue():
             self.apply_distortion()
 
@@ -202,3 +200,6 @@ class MainWindow(wx.Frame):
 
         if self.flangCheck.GetValue():
             self.apply_flanging()
+
+        if self.echoCheck.GetValue():
+            self.apply_echo()

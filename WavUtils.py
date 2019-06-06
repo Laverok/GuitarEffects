@@ -19,8 +19,14 @@ class WavFile:
             # framerate
             self.fs = self.wav.rate
 
+            # number of bytes per sample
+            self.bytes = self.wav.sampwidth
+
             # track data
             self.data = np.array(self.wav.data)
+
+            #track data as float
+            self.floatData = int_to_float(self.data, self.bytes)
 
             # dimensions of the data which is (nSamples, nChannels)
             # nSamples: number of samples in a file
@@ -30,10 +36,7 @@ class WavFile:
             # length of a file in seconds
             self.length = self.nSamples / self.fs
 
-            # number of bytes per sample
-            self.bytes = self.wav.sampwidth
-
-
+            
     def get_track_name(self):
         """Return a track name 'name.wav' """
         lastSlashIndex = self.fileName.rfind('/')
@@ -93,33 +96,35 @@ class WavFile:
         """
         # convert delay in seconds to delay in number of samples
         delaySamples = delay * self.fs
-    
-        for i in range(delaySamples, self.nSamples):
+
+        tempData = np.empty(np.shape(self.floatData), dtype = np.float)
+
+        for i in range(0, self.nSamples):
             
-            current = self.data[i]
-            edited = self.data[i - delaySamples] * decayFactor
-            
-            current += edited.astype(dtype = np.int16)
-        
+            if i >= delaySamples:
+                tempData[i] = self.floatData[i] + decayFactor * self.floatData[i - delaySamples]
+            else:
+                tempData[i] = self.floatData[i]
+
+        self.floatData = tempData
+        self.data = float_to_int16(tempData)
+
 
     def distortion_effect(self, inputGain):
         """Add distortion effect (exponential function)
 
            inputGain: the higher the more distortion
         """ 
-        # scale factor so the algorithm works properly
-        # 32768 for 16-bit .wav
-        sFactor = 2**((self.bytes * 8) - 1)
-        scaledData = (self.data).astype(float) / sFactor
 
-        tempData = np.empty(np.shape(scaledData))
+        tempData = np.empty(np.shape(self.floatData), dtype = np.float)
+
         for i in range(self.nSamples):
              
-            sign = np.sign(scaledData[i])
-            tempData[i] = sign * (1 - np.exp(-np.abs(scaledData[i] * inputGain)))
+            sign = np.sign(self.floatData[i])
+            tempData[i] = sign * (1 - np.exp(-np.abs(self.floatData[i] * inputGain)))
 
-        tempData *= sFactor
-        self.data = tempData.astype(dtype = np.int16)
+        self.floatData = tempData
+        self.data = float_to_int16(tempData)
 
 
     def tremolo_effect(self, depth, fLFO):
@@ -131,12 +136,13 @@ class WavFile:
 
         fNorm = 2 * np.pi * fLFO / self.fs;
 
-        tempData = np.empty(np.shape(self.data), dtype = np.int16)
+        tempData = np.empty(np.shape(self.floatData), dtype = np.float)
 
         for i in range(0, self.nSamples):
-            tempData[i] = self.data[i] * round((1 + depth * np.cos(fNorm * i)))
+            tempData[i] = self.floatData[i] * (1 + depth * np.cos(fNorm * i))
 
-        self.data = tempData
+        self.floatData = tempData
+        self.data = float_to_int16(tempData)
 
 
     def flanging_effect(self, delay, oscRange, fSweep):
@@ -151,13 +157,15 @@ class WavFile:
         
         fNorm = 2 * np.pi * fSweep/self.fs;
 
-        tempData = np.empty(np.shape(self.data), dtype = np.int16)
+        tempData = np.empty(np.shape(self.floatData), dtype = np.float)
 
         for i in range(0, self.nSamples-delaySamples-oscRange):
             
-            tempData[i] = self.data[i] + self.data[i+delaySamples+int(round(oscRange*np.sin(fNorm * i)))]
+            tempData[i] = self.floatData[i] + self.floatData[i+delaySamples+int(round(oscRange*np.sin(fNorm * i)))]
 
-        self.data = tempData
+        self.floatData = tempData
+        self.data = float_to_int16(tempData)
+
 
 
 def int_to_float(intArray, nBytes):
