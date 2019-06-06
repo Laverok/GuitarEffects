@@ -79,6 +79,7 @@ class WavFile:
         play = sa.play_buffer(self.data, self.nChannels, self.bytes, self.fs)
         play.wait_done()
 
+
     def write_to_file(self, file):
         """Save file in a .wav format"""
         wavio.write(file, self.data, self.fs, scale = 'none', sampwidth = self.bytes)
@@ -141,7 +142,7 @@ class WavFile:
     def flanging_effect(self, delay, oscRange, fSweep):
         """Add flanging effect
         
-        delay(ms): 0.025-2
+        delay(ms):    0.025-2
         oscRange:     10-200
         fSweep(Hz):   0.25-2
         """
@@ -157,3 +158,26 @@ class WavFile:
             tempData[i] = self.data[i] + self.data[i+delaySamples+int(round(oscRange*np.sin(fNorm * i)))]
 
         self.data = tempData
+
+
+def int_to_float(intArray, nBytes):
+    """Convert an int array to a float array"""
+    
+    floatArray = np.empty(np.shape(intArray), dtype = np.float)
+    floatArray = intArray / 2 ** (8 * nBytes - 1)
+
+    return floatArray
+
+
+def float_to_int16(floatArray):
+    """Convert a float array to an int16 array"""
+
+    intArray = np.empty(np.shape(floatArray), dtype = np.int16)
+
+    arrayMax = np.amax(floatArray)
+    arrayMin = np.amin(floatArray)
+    scaleFactor = arrayMax if arrayMax >= np.abs(arrayMin) else np.abs(arrayMin)
+
+    intArray = (floatArray / scaleFactor * 2**15).astype(np.int16)
+
+    return intArray

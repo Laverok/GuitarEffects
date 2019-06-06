@@ -53,8 +53,8 @@ class MainWindow(wx.Frame):
         wx.StaticBox(self.mainPanel, wx.ID_ANY, "Apply effects", pos = (10, 210), size = vertBoxHalfSize )
         wx.StaticBox(self.mainPanel, wx.ID_ANY, "Echo", pos = (130, 50), size = vertBoxSize )
         wx.StaticBox(self.mainPanel, wx.ID_ANY, "Distortion", pos = (250, 50), size = vertBoxSize )
-        wx.StaticBox(self.mainPanel, wx.ID_ANY, "Effect no. 3", pos = (370, 50), size = vertBoxSize )
-        wx.StaticBox(self.mainPanel, wx.ID_ANY, "Effect no. 4", pos = (490, 50), size = vertBoxSize )
+        wx.StaticBox(self.mainPanel, wx.ID_ANY, "Tremolo", pos = (370, 50), size = vertBoxSize )
+        wx.StaticBox(self.mainPanel, wx.ID_ANY, "Flanging", pos = (490, 50), size = vertBoxSize )
 
         # Info box
         self.trackNameText = wx.StaticText(self.mainPanel, wx.ID_ANY, "Track name: ", pos = (20, 20))
@@ -85,6 +85,27 @@ class MainWindow(wx.Frame):
 
         wx.StaticText(self.mainPanel, wx.ID_ANY, "Input gain (>1)", pos = (260, 120))
         self.distGainInput = wx.TextCtrl(self.mainPanel, wx.ID_ANY, pos = (260, 140), size = textSize)
+
+        # Tremolo box
+        self.tremCheck = wx.CheckBox(self.mainPanel, wx.ID_ANY, "Apply", pos = (380, 80))
+
+        wx.StaticText(self.mainPanel, wx.ID_ANY, "Depth (0 - 1)", pos  = (380, 120))
+        self.tremDepthInput = wx.TextCtrl(self.mainPanel, wx.ID_ANY, pos = (380, 140), size = textSize)
+
+        wx.StaticText(self.mainPanel, wx.ID_ANY, "fLFO [Hz] (2 - 10)", pos  = (380, 180))
+        self.tremFLFOInput = wx.TextCtrl(self.mainPanel, wx.ID_ANY, pos = (380, 200), size = textSize)
+
+        # Flanging box
+        self.flangCheck = wx.CheckBox(self.mainPanel, wx.ID_ANY, "Apply", pos = (500, 80))
+
+        wx.StaticText(self.mainPanel, wx.ID_ANY, "Delay [ms] (0.025 - 2)", pos  = (500, 120))
+        self.flangDelayInput = wx.TextCtrl(self.mainPanel, wx.ID_ANY, pos = (500, 140), size = textSize)
+        
+        wx.StaticText(self.mainPanel, wx.ID_ANY, "Range (10 - 200)", pos  = (500, 180))
+        self.flangRangeInput = wx.TextCtrl(self.mainPanel, wx.ID_ANY, pos = (500, 200), size = textSize)
+
+        wx.StaticText(self.mainPanel, wx.ID_ANY, "fSweep [Hz] (0.25 - 2)", pos  = (500, 240))
+        self.flangSweepInput = wx.TextCtrl(self.mainPanel, wx.ID_ANY, pos = (500, 260), size = textSize)
 
 
     def closewindow(self, event):
@@ -153,6 +174,21 @@ class MainWindow(wx.Frame):
         self.wavInterface.apply_distortion(inputGain)
 
 
+    def apply_tremolo(self):
+        """Apply tremolo"""
+        depth = float(self.tremDepthInput.GetValue())
+        fLFO = float(self.tremFLFOInput.GetValue())
+        self.wavInterface.apply_tremolo(depth, fLFO)
+
+
+    def apply_flanging(self):
+        """Apply flanging"""
+        delay = float(self.flangDelayInput.GetValue())
+        oscRange = int(self.flangRangeInput.GetValue())
+        fSweep = float(self.flangSweepInput.GetValue())
+        self.wavInterface.apply_flanging(delay, oscRange, fSweep)
+
+
     def apply_effects(self, event):
         """Apply all effects"""
         if self.echoCheck.GetValue():
@@ -160,3 +196,9 @@ class MainWindow(wx.Frame):
         
         if self.distCheck.GetValue():
             self.apply_distortion()
+
+        if self.tremCheck.GetValue():
+            self.apply_tremolo()
+
+        if self.flangCheck.GetValue():
+            self.apply_flanging()
