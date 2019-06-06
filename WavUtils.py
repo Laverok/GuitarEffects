@@ -120,15 +120,29 @@ class WavFile:
         tempData *= sFactor
         self.data = tempData.astype(dtype = np.int16)
 
-    def tremolo_effect():
-        """Add tremolo effect"""
-        pass
+
+    def tremolo_effect(self, depth, fLFO):
+        """Add tremolo effect
+        
+        depth:     0-1
+        fLFO(Hz):  2-10
+        """
+
+        fNorm = 2 * np.pi * fLFO / self.fs;
+
+        tempData = np.empty(np.shape(self.data), dtype = np.int16)
+
+        for i in range(0, self.nSamples):
+            tempData[i] = self.data[i] * round((1 + depth * np.cos(fNorm * i)))
+
+        self.data = tempData
+
 
     def flanging_effect(self, delay, oscRange, fSweep):
         """Add flanging effect
         
-        delay(in ms): 0.025-2
-        oscRange:        10-200
+        delay(ms): 0.025-2
+        oscRange:     10-200
         fSweep(Hz):   0.25-2
         """
         
@@ -140,6 +154,6 @@ class WavFile:
 
         for i in range(0, self.nSamples-delaySamples-oscRange):
             
-            tempData[i] = self.data[i] + self.data[i+delaySamples+int(round(oscRange*np.sin(fNorm * i)))];
+            tempData[i] = self.data[i] + self.data[i+delaySamples+int(round(oscRange*np.sin(fNorm * i)))]
 
-        self.data = tempData;
+        self.data = tempData
