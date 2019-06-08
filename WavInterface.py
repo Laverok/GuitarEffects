@@ -1,5 +1,6 @@
 import numpy as np
 import wavio
+import copy
 from WavUtils import *
 import wx
 
@@ -20,7 +21,7 @@ class WavInterface:
 
         if file != "":
             self.origWav = WavFile(file)
-            self.modiWav = self.origWav
+            self.modiWav = copy.deepcopy(self.origWav)
 
 
     def save_wavfile(self, file):

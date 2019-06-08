@@ -95,7 +95,7 @@ class WavFile:
            decayFactor: 0-1 
         """
         # convert delay in seconds to delay in number of samples
-        delaySamples = delay * self.fs
+        delaySamples = int(delay * self.fs)
 
         tempData = np.empty(np.shape(self.floatData), dtype = np.float)
 
