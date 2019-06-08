@@ -174,29 +174,101 @@ class MainWindow(wx.Frame):
 
     def apply_echo(self):
         """Apply echo"""
-        delay = int(self.echoDelayInput.GetValue())
-        decayFactor = float(self.echoDelayInput.GetValue())
+        
+        tempDelay = int(float(self.echoDelayInput.GetValue()))
+        tempDecayFactor = float(self.echoDelayInput.GetValue())
+
+        delay = tempDelay if tempDelay > 0 else 0
+        
+        decayFactor = 0.0
+
+        if tempDecayFactor < 0.0:
+            decayFactor = 0.0
+        elif tempDecayFactor > 1.0:
+            decayFactor = 1.0
+        else:
+            decayFactor = tempDecayFactor
+
         self.wavInterface.apply_echo(delay, decayFactor)
 
 
     def apply_distortion(self):
         """Apply distortion"""
-        inputGain = int(self.distGainInput.GetValue())
+
+        tempInputGain = int(float(self.distGainInput.GetValue()))
+        inputGain = 0
+
+        if tempInputGain < 2.0:
+            inputGain = 2
+        elif tempInputGain > 20.0:
+            inputGain = 20
+        else:
+            inputGain = tempInputGain
+
         self.wavInterface.apply_distortion(inputGain)
 
 
     def apply_tremolo(self):
         """Apply tremolo"""
-        depth = float(self.tremDepthInput.GetValue())
-        fLFO = float(self.tremFLFOInput.GetValue())
+
+        tempDepth = float(self.tremDepthInput.GetValue())
+        tempfLFO = float(self.tremFLFOInput.GetValue())
+
+        depth = 0.0
+
+        if tempDepth < 0.0:
+            depth = 0.0
+        elif tempDepth > 1.0:
+            depth = 1.0
+        else:
+            depth = tempDepth
+
+        fLFO = 0.0
+
+        if tempfLFO < 2.0:
+            fLFO = 2.0
+        elif tempfLFO > 10.0:
+            fLFO = 10.0
+        else:
+            fLFO = tempfLFO
+
         self.wavInterface.apply_tremolo(depth, fLFO)
 
 
     def apply_flanging(self):
         """Apply flanging"""
-        delay = float(self.flangDelayInput.GetValue())
-        oscRange = int(self.flangRangeInput.GetValue())
-        fSweep = float(self.flangSweepInput.GetValue())
+
+        tempDelay = float(self.flangDelayInput.GetValue())
+        tempOscRange = int(float(self.flangRangeInput.GetValue()))
+        tempfSweep = float(self.flangSweepInput.GetValue())
+
+        delay = 0.0
+
+        if tempDelay < 0.025:
+            delay = 0.025
+        elif tempDelay > 2.0:
+            delay = 2
+        else:
+            delay = tempDelay
+        
+        oscRange = 0
+
+        if tempOscRange < 10.0:
+            oscRange = 10
+        elif tempOscRange > 200:
+            oscRange = 200
+        else:
+            oscRange = tempOscRange
+        
+        fSweep = 0.0
+
+        if tempfSweep < 0.25:
+            fSweep = 0.25
+        elif tempfSweep > 2.0:
+            fSweep = 2.0
+        else:
+            fSweep = tempfSweep
+
         self.wavInterface.apply_flanging(delay, oscRange, fSweep)
 
 
