@@ -83,34 +83,34 @@ class MainWindow(wx.Frame):
         wx.StaticText(self.mainPanel, wx.ID_ANY, "Delay [s]", pos = (140, 120))
         self.echoDelayInput = wx.TextCtrl(self.mainPanel, wx.ID_ANY, pos = (140, 140), size = textSize)
 
-        wx.StaticText(self.mainPanel, wx.ID_ANY, "Decay factor (0 - 1)", pos = (140, 180))
+        wx.StaticText(self.mainPanel, wx.ID_ANY, "Decay factor (0-1)", pos = (140, 180))
         self.echoDecayInput = wx.TextCtrl(self.mainPanel, wx.ID_ANY, pos = (140, 200), size = textSize)
 
         # Distortion box
         self.distCheck = wx.CheckBox(self.mainPanel, wx.ID_ANY, "Apply", pos = (260, 80))
 
-        wx.StaticText(self.mainPanel, wx.ID_ANY, "Input gain (>1)", pos = (260, 120))
+        wx.StaticText(self.mainPanel, wx.ID_ANY, "Input gain (2-20)", pos = (260, 120))
         self.distGainInput = wx.TextCtrl(self.mainPanel, wx.ID_ANY, pos = (260, 140), size = textSize)
 
         # Tremolo box
         self.tremCheck = wx.CheckBox(self.mainPanel, wx.ID_ANY, "Apply", pos = (380, 80))
 
-        wx.StaticText(self.mainPanel, wx.ID_ANY, "Depth (0 - 1)", pos  = (380, 120))
+        wx.StaticText(self.mainPanel, wx.ID_ANY, "Depth (0-1)", pos  = (380, 120))
         self.tremDepthInput = wx.TextCtrl(self.mainPanel, wx.ID_ANY, pos = (380, 140), size = textSize)
 
-        wx.StaticText(self.mainPanel, wx.ID_ANY, "fLFO [Hz] (2 - 10)", pos  = (380, 180))
+        wx.StaticText(self.mainPanel, wx.ID_ANY, "fLFO [Hz] (2-10)", pos  = (380, 180))
         self.tremFLFOInput = wx.TextCtrl(self.mainPanel, wx.ID_ANY, pos = (380, 200), size = textSize)
 
         # Flanging box
         self.flangCheck = wx.CheckBox(self.mainPanel, wx.ID_ANY, "Apply", pos = (500, 80))
 
-        wx.StaticText(self.mainPanel, wx.ID_ANY, "Delay [ms] (0.025 - 2)", pos  = (500, 120))
+        wx.StaticText(self.mainPanel, wx.ID_ANY, "Delay [ms] (0.025-2)", pos  = (500, 120))
         self.flangDelayInput = wx.TextCtrl(self.mainPanel, wx.ID_ANY, pos = (500, 140), size = textSize)
         
-        wx.StaticText(self.mainPanel, wx.ID_ANY, "Range (10 - 200)", pos  = (500, 180))
+        wx.StaticText(self.mainPanel, wx.ID_ANY, "Range (10-200)", pos  = (500, 180))
         self.flangRangeInput = wx.TextCtrl(self.mainPanel, wx.ID_ANY, pos = (500, 200), size = textSize)
 
-        wx.StaticText(self.mainPanel, wx.ID_ANY, "fSweep [Hz] (0.25 - 2)", pos  = (500, 240))
+        wx.StaticText(self.mainPanel, wx.ID_ANY, "fSweep [Hz] (0.25-2)", pos  = (500, 240))
         self.flangSweepInput = wx.TextCtrl(self.mainPanel, wx.ID_ANY, pos = (500, 260), size = textSize)
 
 

@@ -95,7 +95,7 @@ class WavFile:
     def echo_effect(self, delay, decayFactor ):
         """Add echo effect
 
-           delay: in seconds
+           delay[s]: >0.0
            decayFactor: 0-1 
         """
         # convert delay in seconds to delay in number of samples
@@ -115,9 +115,9 @@ class WavFile:
 
 
     def distortion_effect(self, inputGain):
-        """Add distortion effect (exponential function)
+        """Add distortion effect (implemented with an exponential function)
 
-           inputGain: the higher the more distortion
+           inputGain: 2-20
         """ 
 
         tempData = np.empty(np.shape(self.floatData), dtype = np.float)
