@@ -45,7 +45,7 @@ class MainWindow(wx.Frame):
         horiBoxSize = (600, 50)
         vertBoxSize = (120, 320)
         vertBoxHalfSize = (120, 160)
-        buttonSize = (100, 50)
+        buttonSize = (100, 40)
         textSize = (50, 20)
 
         wx.StaticBox(self.mainPanel, wx.ID_ANY, "Track info", pos = (10, 0), size = horiBoxSize )
@@ -64,8 +64,11 @@ class MainWindow(wx.Frame):
         self.playOrigButton = wx.Button(self.mainPanel, wx.ID_ANY, "Play original", pos = (20, 80), size = buttonSize)
         self.Bind(wx.EVT_BUTTON, self.play_orig_wavfile, self.playOrigButton)
 
-        self.playModiButton = wx.Button(self.mainPanel, wx.ID_ANY, "Play modified", pos = (20, 140), size = buttonSize)
+        self.playModiButton = wx.Button(self.mainPanel, wx.ID_ANY, "Play modified", pos = (20, 120), size = buttonSize)
         self.Bind(wx.EVT_BUTTON, self.play_modi_wavfile, self.playModiButton)
+
+        self.stopButton = wx.Button(self.mainPanel, wx.ID_ANY, "Stop all", pos = (20, 160), size = buttonSize)
+        self.Bind(wx.EVT_BUTTON, self.stop_all, self.stopButton)
 
         # Apply effects box
         self.applyEffectsButton = wx.Button(self.mainPanel, wx.ID_ANY, "Apply all effects", pos = (20, 270), size = buttonSize)
@@ -159,6 +162,11 @@ class MainWindow(wx.Frame):
 
         if self.wavInterface.modiWav.fileName != "":
             self.wavInterface.modiWav.play()
+  
+    
+    def stop_all(self, event):
+        """Stops all sound"""
+        self.wavInterface.origWav.stop()
 
 
     def apply_echo(self):

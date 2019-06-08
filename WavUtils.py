@@ -80,7 +80,11 @@ class WavFile:
     def play(self):
         """Play the sound"""
         play = sa.play_buffer(self.data, self.nChannels, self.bytes, self.fs)
-        play.wait_done()
+
+
+    def stop(self):
+        """Stop all sounds"""
+        sa.stop_all()
 
 
     def write_to_file(self, file):
