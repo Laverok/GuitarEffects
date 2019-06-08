@@ -71,8 +71,11 @@ class MainWindow(wx.Frame):
         self.Bind(wx.EVT_BUTTON, self.stop_all, self.stopButton)
 
         # Apply effects box
-        self.applyEffectsButton = wx.Button(self.mainPanel, wx.ID_ANY, "Apply all effects", pos = (20, 270), size = buttonSize)
+        self.applyEffectsButton = wx.Button(self.mainPanel, wx.ID_ANY, "Apply all effects", pos = (20, 250), size = buttonSize)
         self.Bind(wx.EVT_BUTTON, self.apply_effects, self.applyEffectsButton)
+
+        self.resetEffectsButton = wx.Button(self.mainPanel, wx.ID_ANY, "Reset all effects", pos = (20, 290), size = buttonSize)
+        self.Bind(wx.EVT_BUTTON, self.reset_effects, self.resetEffectsButton)
 
         # Echo box
         self.echoCheck = wx.CheckBox(self.mainPanel, wx.ID_ANY, "Apply", pos = (140, 80))
@@ -211,3 +214,8 @@ class MainWindow(wx.Frame):
 
         if self.echoCheck.GetValue():
             self.apply_echo()
+
+
+    def reset_effects(self, event):
+        """Reset all effects"""
+        self.wavInterface.reset_effects()

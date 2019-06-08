@@ -49,3 +49,8 @@ class WavInterface:
     def apply_flanging(self, delay, oscRange, fSweep):
         """Apply flanging to original wav file"""
         self.modiWav.flanging_effect(delay, oscRange, fSweep)
+
+
+    def reset_effects(self):
+        """Reset all effects applied to the wav file"""
+        self.modiWav = copy.deepcopy(self.origWav)
